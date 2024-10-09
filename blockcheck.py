@@ -23,7 +23,7 @@ SITES_TO_TEST = [
     "https://ntc.party",
     "https://rutracker.org",
     "https://anilibria.tv",
-    "https://nyaa.si"
+    "https://nyaa.land"
 ]
 
 # Configure logging
