@@ -64,8 +64,7 @@ def stop_goodbyedpi(process):
 def test_site(site):
     try:
         response = requests.get(site, headers = HEADERS, timeout=1)
-        # passive DPI's can redirect HTTP to a stub page with a 302 code
-        if (len(response.content) == 0 or response.status_code == 302):
+        if len(response.content) == 0:
             return site, "NOT WORKING"
         return site, "WORKING"
     except requests.RequestException:
