@@ -8,6 +8,7 @@ from datetime import datetime
 # Constants for replacements
 FAKE_SNI = "www.google.com"
 FAKE_HEX = "5fc220bc088ae1a45235e46de591be50a50c979be92694471697a299ce78c1c276737bef7abc9668142b92c395810a659ff47dfd2411c010e990"
+PAYLOADTLS = "tls_clienthello_www_google_com.bin"
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6753.0 Safari/537.36'}
 SITES_TO_TEST = list(set([
     "https://chess.com",
@@ -113,7 +114,7 @@ SITES_TO_TEST = list(set([
 # Configure logging
 def setup_logging():
     now = datetime.now()
-    log_filename = f"log_blockcheck_GoodbyeDPI_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt"
+    log_filename = f"log_blockcheck_zapret_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt"
     
     logging.basicConfig(
         filename=log_filename,
@@ -135,10 +136,11 @@ def read_strategies(file_path):
 def replace_parameters(parameters):
     parameters = parameters.replace("FAKESNI", FAKE_SNI)
     parameters = parameters.replace("FAKEHEX", FAKE_HEX)
-    return f"{parameters} -q"
+    parameters = parameters.replace("PAYLOADTLS", PAYLOADTLS)
+    return f"{parameters}"
 
 def start_goodbyedpi(parameters):
-    process = subprocess.Popen(['goodbyedpi.exe'] + parameters.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    process = subprocess.Popen(['winws.exe'] + parameters.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return process
 
 def stop_goodbyedpi(process):
@@ -180,7 +182,7 @@ def log_results(params, results, current_line, total_lines):
 
 def main():
     setup_logging()
-    strategies = read_strategies('strategies_gdpi.txt')
+    strategies = read_strategies('zapret_strategies_gdpi.txt')
     total_lines = len(strategies)
 
     for current_line, original_params in enumerate(strategies, start=1):
