@@ -1,0 +1,17 @@
+[
+    {
+        "file_name": "cygwin1.dll",
+        "url": "file://c:\\cygwin64\\bin\\cygwin1.dll",
+        "md5sum": "478a1dc9a109f1aa63652be455bd6614"
+    },
+    {
+        "file_name": "winws.exe",
+        "url": "https://github.com/bol-van/zapret/raw/refs/heads/master/binaries/win64/winws.exe",
+        "md5sum": "8c624e64742bc19447d52f61edec52db"
+    },
+    {
+        "file_name": "goodbyedpi-0.2.3rc3-2.zip",
+        "url": "https://github.com/ValdikSS/GoodbyeDPI/releases/download/0.2.3rc3/goodbyedpi-0.2.3rc3-2.zip",
+        "md5sum": "55d4ce5319b22fd3e034d0eaad96c770"
+    }
+]
