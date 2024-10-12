@@ -12,7 +12,7 @@ import sys
 # Constants for replacements
 FAKE_SNI = "www.google.com"
 FAKE_HEX = "5fc220bc088ae1a45235e46de591be50a50c979be92694471697a299ce78c1c276737bef7abc9668142b92c395810a659ff47dfd2411c010e990"
-PAYLOADTLS = "bin/tls_clienthello_www_google_com.bin"
+PAYLOADTLS = "tls_clienthello_www_google_com.bin"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6753.0 Safari/537.36"}
 
 ANTI_DPI_TOOLS_LIST = ["goodbyedpi", "zapret", "none"]
