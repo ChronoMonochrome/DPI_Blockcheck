@@ -1,5 +1,5 @@
 
-# GDPI Block Check
+# DPI Block Check
 
 A Python script to check the accessibility of various websites while using the [GoodbyeDPI](https://github.com/ValdikSS/GoodbyeDPI) project. The script tests the availability of websites by launching GoodbyeDPI, which is a tool that helps bypass blocking restrictions.
 

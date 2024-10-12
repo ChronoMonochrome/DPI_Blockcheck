@@ -1,137 +1,98 @@
+import signal
 import subprocess
 import requests
 import time
 import logging
+import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
+import os
+import sys
 
 # Constants for replacements
 FAKE_SNI = "www.google.com"
 FAKE_HEX = "5fc220bc088ae1a45235e46de591be50a50c979be92694471697a299ce78c1c276737bef7abc9668142b92c395810a659ff47dfd2411c010e990"
 PAYLOADTLS = "tls_clienthello_www_google_com.bin"
-HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6753.0 Safari/537.36'}
-SITES_TO_TEST = list(set([
-    "https://chess.com",
-    "https://discord.com",
-    "https://discord.gg",
-    "https://www.youtube.com",
-    "https://rr1---sn-ug5onuxaxjvh-n8v6.googlevideo.com",
-    "https://rr1---sn-gvnuxaxjvh-o8ge.googlevideo.com",
-    "https://rr1---sn-ug5onuxaxjvh-p3ul.googlevideo.com",
-    "https://rr1---sn-4axm-n8vs.googlevideo.com",
-    "https://rr1---sn-nxu-nufl.googlevideo.com",
-    "https://x.com",
-    "https://instagram.com",
-    "https://ntc.party",
-    "https://rutracker.org",
-    "https://anilibria.tv",
-    "https://nyaa.land",
-"https://rr1---sn-4axm-n8vs.googlevideo.com",
-"https://rr1---sn-gvnuxaxjvh-o8ge.googlevideo.com",
-"https://rr1---sn-ug5onuxaxjvh-p3ul.googlevideo.com",
-"https://rr1---sn-ug5onuxaxjvh-n8v6.googlevideo.com",
-"https://rr1---sn-gvnuxaxjvh-aome.googlevideo.com",
-"https://rr2---sn-ubpouxgg5-n8ml.googlevideo.com",
-"https://rr4---sn-q4flrnsl.googlevideo.com",
-"https://rr10---sn-gvnuxaxjvh-304z.googlevideo.com",
-"https://rr4---sn-n3toxu-axql.googlevideo.com",
-"https://rr1---sn-jvhnu5g-n8ve7.googlevideo.com",
-"https://rr14---sn-n8v7kn7r.googlevideo.com",
-"https://rr16---sn-axq7sn76.googlevideo.com",
-"https://rr1---sn-8ph2xajvh-5xge.googlevideo.com",
-"https://rr1---sn-gvnuxaxjvh-5gie.googlevideo.com",
-"https://rr12---sn-gvnuxaxjvh-bvwz.googlevideo.com",
-"https://rr5---sn-n8v7knez.googlevideo.com",
-"https://rr1---sn-u5uuxaxjvhg0-ocje.googlevideo.com",
-"https://rr2---sn-q4fl6ndl.googlevideo.com",
-"https://rr5---sn-gvnuxaxjvh-n8vk.googlevideo.com",
-"https://rr4---sn-jvhnu5g-c35d.googlevideo.com",
-"https://rr1---sn-q4fl6n6y.googlevideo.com",
-"https://rr2---sn-hgn7ynek.googlevideo.com",
-"https://www.youtube.com",
-"https://x.com",
-"https://video.google.com",
-"https://youtu.be",
-"https://yt.be",
-"https://googleusercontent.com",
-"https://yt3.ggpht.com",
-"https://yt4.ggpht.com",
-"https://googleapis.com",
-"https://gstatic.com",
-"https://play.google.com",
-"https://kinozal.tv",
-"https://hdkinoteatr.com",
-"https://rutor.info",
-"https://rutor.is",
-"https://pixiv.net",
-"https://danbooru.donmai.us",
-"https://gelbooru.com",
-"https://protonvpn.com",
-"https://yande.re",
-"https://pornhub.com",
-"https://adguard.com",
-"https://rutracker.org",
-"https://gofile.io",
-"https://readmanga.live",
-"https://prostovpn.org",
-"https://soundcloud.com",
-"https://imagedelivery.net",
-"https://meduza.io",
-"https://nnmclub.to",
-"https://facebook.com",
-"https://fbcdn.net",
-"https://fbsbx.com",
-"https://checkvpn.net",
-"https://quora.com",
-"https://www.quora.com",
-"https://novayagazeta.ru",
-"https://muzlo.me",
-"https://streamable.com",
-"https://annas-archive.org",
-"https://xhamster.com",
-"https://10minutemail.net",
-"https://patreon.com",
-"https://torproject.org",
-"https://psiphon.ca",
-"https://amnezia.org",
-"https://t.co",
-"https://fb.com",
-"https://linkedin.com",
-"https://proton.me",
-"https://thepiratebay.org",
-"https://nnm-club-me.ru",
-"https://10minutemail.com",
-"https://www.instagram.com",
-"https://instagram.com",
-"https://mullvad.net",
-"https://rezka.ag",
-"https://xvideos.com",
-"https://www.xv-ru.com",
-"https://pcnews.ru",
-"https://ohentai.org"
-]))
+HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6753.0 Safari/537.36"}
 
-# Configure logging
-def setup_logging():
+ANTI_DPI_TOOLS_LIST = ["goodbyedpi", "zapret", "none"]
+ZAPRET_NT_TOOL_NAME = "winws.exe"
+ZAPRET_NT_PATH = ""
+ZAPRET_NT_ARGS = ["--wf-l3=ipv4", "--wf-tcp=443"]
+GOODBYEDPI_NT_TOOL_NAME = "goodbyedpi.exe"
+GOODBYEDPI_NT_ARGS = []
+GOODBYEDPI_NT_PATH = ""
+
+zapret_linux_config_mounted = False
+g_tool = ""
+
+def write_zapret_linux_config(args):
+    os.makedirs("./tmp", exist_ok=True)
+    args_str = " ".join(args)
+    config = open("./configs/zapret_linux_config", "rb").read().decode("u8").replace('NFQWS_OPT_DESYNC_HTTPS="ARGS"', f'NFQWS_OPT_DESYNC_HTTPS="{args_str}"')
+    open("./tmp/zapret_linux_config", "wb").write(config.encode("u8"))
+
+def remove_zapret_linux_config():
+    os.remove("./tmp/zapret_linux_config")
+
+def mount_zapret_linux_config():
+    subprocess.run("mount -o bind $(realpath ./tmp/zapret_linux_config) /opt/zapret/config", shell=True)
+
+def umount_zapret_linux_config():
+    subprocess.run("umount /opt/zapret/config", shell=True)
+
+def signal_handler(sig, frame):
+    global g_tool
+    """Handle signals to safely exit."""
+    if g_tool == "zapret" and os.name == "posix":
+        stop_tool(None, g_tool)
+        sys.exit(0)
+
+def find_tool_path(tool_name):
+    if not tool_name in ANTI_DPI_TOOLS_LIST:
+        raise RuntimeError(f"tool is not supported: {tool_name}")
+
+    ret = ""
+    if os.name == "nt":
+        match tool_name:
+            case "zapret":
+                ret = os.path.join(ZAPRET_NT_PATH, ZAPRET_NT_TOOL_NAME)
+            case "goodbyedpi":
+                ret = os.path.join(GOODBYEDPI_NT_PATH, GOODBYEDPI_NT_TOOL_NAME)
+    else:
+        match tool_name:
+            case "zapret":
+                ret = os.path.join(ZAPRET_LINUX_PATH, ZAPRET_LINUX_TOOL_NAME)
+            case "goodbyedpi":
+                raise RuntimeError("GoodbyeDPI only supported on Windows")
+    if not os.path.exists(ret):
+        raise RuntimeError(f"Couldn't find specified tool at {ret}")
+    return ret
+
+def read_sites(file_path):
+    with open(file_path, "r") as file:
+        return [line.strip() for line in file if line.strip()]
+
+def setup_logging(tool):
     now = datetime.now()
-    log_filename = f"log_blockcheck_zapret_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt"
+    log_filename = f"log_blockcheck_{tool}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt"
     
     logging.basicConfig(
         filename=log_filename,
         level=logging.INFO,
-        format='%(message)s'
+        format="%(message)s"
     )
 
-    # Also log to console
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.INFO)
-    console_formatter = logging.Formatter('%(message)s')
+    console_formatter = logging.Formatter("%(message)s")
     console_handler.setFormatter(console_formatter)
     logging.getLogger().addHandler(console_handler)
 
-def read_strategies(file_path):
-    with open(file_path, 'r') as file:
-        return [line.strip() for line in file if not line.startswith('/')]
+def read_strategies(tool_name):
+    strategy_file = f"strategies/{tool_name}_strategies.txt"
+    with open(strategy_file, "r") as file:
+        return [line.strip() for line in file if not line.startswith("/")]
 
 def replace_parameters(parameters):
     parameters = parameters.replace("FAKESNI", FAKE_SNI)
@@ -139,13 +100,46 @@ def replace_parameters(parameters):
     parameters = parameters.replace("PAYLOADTLS", PAYLOADTLS)
     return f"{parameters}"
 
-def start_goodbyedpi(parameters):
-    process = subprocess.Popen(['winws.exe'] + parameters.split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return process
+def start_tool(tool, parameters):
+    parameters = parameters.split()
 
-def stop_goodbyedpi(process):
-    process.terminate()
-    process.wait()
+    if os.name == "nt":
+        match tool:
+            case "goodbyedpi":
+                parameters = GOODBYEDPI_NT_ARGS + parameters
+            case "zapret":
+                parameters = ZAPRET_NT_ARGS + parameters
+    else:
+        match tool:
+            case "goodbyedpi":
+                RuntimeError(f"tool {tool} is not supported on OS {os.name}")
+            case "zapret":
+                pass
+
+    if (os.name == "posix" and tool == "zapret"):
+        global zapret_linux_config_mounted
+        if not zapret_linux_config_mounted:
+            write_zapret_linux_config(parameters)
+            mount_zapret_linux_config()
+            zapret_linux_config_mounted = True
+        subprocess.run("service zapret restart", shell=True)
+        return
+    else:
+        tool_path = find_tool_path(tool)
+        process = subprocess.Popen([tool_path] + parameters, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return process
+
+def stop_tool(process, tool):
+    if not (os.name == "posix" and tool == "zapret"):
+        process.terminate()
+        process.wait()
+    else:
+        global zapret_linux_config_mounted
+        if zapret_linux_config_mounted:
+            remove_zapret_linux_config()
+            umount_zapret_linux_config()
+            zapret_linux_config_mounted = False
+        subprocess.run("service zapret restart", shell=True)
 
 def test_site(site):
     try:
@@ -156,11 +150,11 @@ def test_site(site):
     except requests.RequestException:
         return site, "NOT WORKING"
 
-def test_sites():
+def test_sites(sites):
     results = {}
     
     with ThreadPoolExecutor() as executor:
-        future_to_site = {executor.submit(test_site, site): site for site in SITES_TO_TEST}
+        future_to_site = {executor.submit(test_site, site): site for site in sites}
         for future in as_completed(future_to_site):
             site, status = future.result()
             results[site] = status
@@ -181,21 +175,41 @@ def log_results(params, results, current_line, total_lines):
     logging.info(summary)
 
 def main():
-    setup_logging()
-    strategies = read_strategies('zapret_strategies_gdpi.txt')
-    total_lines = len(strategies)
+    global g_tool
+    if os.name == "posix":
+        # Register signal handler for cleanup
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
 
-    for current_line, original_params in enumerate(strategies, start=1):
-        parameters = replace_parameters(original_params)
-        process = start_goodbyedpi(parameters)
+    parser = argparse.ArgumentParser(description="Block check script for GoodbyeDPI or Zapret.")
+    parser.add_argument("--tool", type=str, choices=ANTI_DPI_TOOLS_LIST, required=True,
+                        help="Choose anti-DPI tool: GoodbyeDPI, Zapret or none.")
+    
+    args = parser.parse_args()
+    g_tool = args.tool
+    
+    sites = read_sites("sites_list.txt")
+    
+    if not args.tool == "none":
+        strategies = read_strategies(args.tool)
+        total_lines = len(strategies)
 
-        # Allow some time for goodbyedpi.exe to start
-        time.sleep(2)
+    setup_logging(args.tool)
 
-        results = test_sites()
-        log_results(parameters, results, current_line, total_lines)
+    if not args.tool == "none":
+        for current_line, original_params in enumerate(strategies, start=1):
+            parameters = replace_parameters(original_params)
+            process = start_tool(args.tool, parameters)
 
-        stop_goodbyedpi(process)
+            time.sleep(2) 
+
+            results = test_sites(sites)
+            log_results(parameters, results, current_line, total_lines)
+
+            stop_tool(process, args.tool)
+    else:
+        results = test_sites(sites)
+        log_results("", results, "", 0)
 
 if __name__ == "__main__":
     main()
