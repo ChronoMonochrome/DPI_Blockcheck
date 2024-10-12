@@ -22,8 +22,8 @@ This script is inspired by another project found at [NTC Party](https://ntc.part
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/ChronoMonochrome/dpi-block-check.git
-   cd dpi-block-check
+   git clone https://github.com/ChronoMonochrome/DPI_Blockcheck
+   cd DPI_Blockcheck
 2. If cloning this repo first time, run `python download_files.py`. The required files will be downloaded to bin folder. For zapret to work on Windows, it's required that the cygwin is installed to C:/cygwin64 (or a file C:/cygwin64/bin/cygwin1.dll is present)
 3. Run blockcheck.py (e.g. from cmd.exe) with admin privileges:
    `python blockcheck.py --tool=zapret`
