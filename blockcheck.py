@@ -163,17 +163,17 @@ def test_sites(sites):
     return results
 
 def log_results(params, results, current_line, total_lines):
-    logging.info(f"Testing ({current_line}/{total_lines}): {params}")
-
     successes = 0
+    for site, status in results.items():
+        if status == "WORKING":
+            successes += 1
+            
+    summary = f"Successes: {successes}/{len(results)}"
+    logging.info(f"Testing ({current_line}/{total_lines}): {params}. {summary}")
+
     for site, status in results.items():
         log_entry = f"{status}\t\t{site}"
         logging.info(log_entry)
-        if status == "WORKING":
-            successes += 1
-
-    summary = f"Successes: {successes}/{len(results)}"
-    logging.info(summary)
 
 def main():
     global g_tool
