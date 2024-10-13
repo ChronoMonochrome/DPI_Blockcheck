@@ -127,7 +127,7 @@ def start_tool(tool, parameters):
         return
     else:
         tool_path = find_tool_path(tool)
-        process = subprocess.Popen([tool_path] + parameters, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        process = subprocess.Popen([tool_path] + parameters, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         return process
 
 def stop_tool(process, tool):
