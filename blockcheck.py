@@ -25,18 +25,23 @@ GOODBYEDPI_NT_PATH = "bin"
 
 zapret_linux_config_mounted = False
 g_tool = ""
+g_absolute_path = ""
 
 def write_zapret_linux_config(args):
-    os.makedirs("./tmp", exist_ok=True)
+    global g_absolute_path
+    os.makedirs(os.path.join(g_absolute_path, "tmp"), exist_ok=True)
     args_str = " ".join(args)
-    config = open("./configs/zapret_linux_config", "rb").read().decode("u8").replace('NFQWS_OPT_DESYNC_HTTPS="ARGS"', f'NFQWS_OPT_DESYNC_HTTPS="{args_str}"')
-    open("./tmp/zapret_linux_config", "wb").write(config.encode("u8"))
+    config = open(os.path.join(g_absolute_path, "configs/zapret_linux_config"), "rb").read().decode("u8").replace('NFQWS_OPT_DESYNC_HTTPS="ARGS"', f'NFQWS_OPT_DESYNC_HTTPS="{args_str}"')
+    open(os.path.join(g_absolute_path, "tmp/zapret_linux_config"), "wb").write(config.encode("u8"))
 
 def remove_zapret_linux_config():
-    os.remove("./tmp/zapret_linux_config")
+    global g_absolute_path
+    os.remove(os.path.join(g_absolute_path, "tmp/zapret_linux_config"))
 
 def mount_zapret_linux_config():
-    subprocess.run("mount -o bind $(realpath ./tmp/zapret_linux_config) /opt/zapret/config", shell=True)
+    global g_absolute_path
+    config = os.path.join(g_absolute_path, "tmp/zapret_linux_config")
+    subprocess.run(f"mount -o bind {config} /opt/zapret/config", shell=True)
 
 def umount_zapret_linux_config():
     subprocess.run("umount /opt/zapret/config", shell=True)
@@ -70,13 +75,15 @@ def find_tool_path(tool_name):
     return ret
 
 def read_sites(set_name = "min"):
-    file_path = f"sites_list/{set_name}.txt"
+    global g_absolute_path
+    file_path = os.path.join(g_absolute_path, f"sites_list/{set_name}.txt")
     with open(file_path, "r") as file:
         return [line.strip() for line in file if line.strip()]
 
 def setup_logging(tool):
+    global g_absolute_path
     now = datetime.now()
-    log_filename = f"log_blockcheck_{tool}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt"
+    log_filename = os.path.join(g_absolute_path, f"log_blockcheck_{tool}_{now.strftime('%d-%m-%Y_%H-%M-%S')}.txt")
     
     logging.basicConfig(
         filename=log_filename,
@@ -91,14 +98,16 @@ def setup_logging(tool):
     logging.getLogger().addHandler(console_handler)
 
 def read_strategies(tool_name, strategy_set_name = "min"):
-    strategy_file = f"strategies/{strategy_set_name}/{tool_name}_strategies.txt"
+    global g_absolute_path
+    strategy_file = os.path.join(g_absolute_path, f"strategies/{strategy_set_name}/{tool_name}_strategies.txt")
     with open(strategy_file, "r") as file:
         return [line.strip() for line in file if not line.startswith("/")]
 
 def replace_parameters(parameters):
+    global g_absolute_path
     parameters = parameters.replace("FAKESNI", FAKE_SNI)
     parameters = parameters.replace("FAKEHEX", FAKE_HEX)
-    parameters = parameters.replace("PAYLOADTLS", PAYLOADTLS)
+    parameters = parameters.replace("PAYLOADTLS", os.path.join(g_absolute_path, "bin", PAYLOADTLS))
     return f"{parameters}"
 
 def start_tool(tool, parameters):
@@ -176,7 +185,10 @@ def log_results(params, results, current_line, total_lines):
         logging.info(log_entry)
 
 def main():
-    global g_tool
+    global g_tool, g_absolute_path
+
+    g_absolute_path = os.path.dirname(os.path.abspath(__file__))
+    
     if os.name == "posix":
         # Register signal handler for cleanup
         signal.signal(signal.SIGINT, signal_handler)
@@ -205,7 +217,7 @@ def main():
             parameters = replace_parameters(original_params)
             process = start_tool(args.tool, parameters)
 
-            time.sleep(2) 
+            time.sleep(2)
 
             results = test_sites(sites)
             log_results(parameters, results, current_line, total_lines)
