@@ -69,7 +69,8 @@ def find_tool_path(tool_name):
         raise RuntimeError(f"Couldn't find specified tool at {ret}")
     return ret
 
-def read_sites(file_path):
+def read_sites(set_name = "min"):
+    file_path = f"sites_list/{set_name}.txt"
     with open(file_path, "r") as file:
         return [line.strip() for line in file if line.strip()]
 
@@ -89,8 +90,8 @@ def setup_logging(tool):
     console_handler.setFormatter(console_formatter)
     logging.getLogger().addHandler(console_handler)
 
-def read_strategies(tool_name):
-    strategy_file = f"strategies/{tool_name}_strategies.txt"
+def read_strategies(tool_name, strategy_set_name = "min"):
+    strategy_file = f"strategies/{strategy_set_name}/{tool_name}_strategies.txt"
     with open(strategy_file, "r") as file:
         return [line.strip() for line in file if not line.startswith("/")]
 
@@ -184,14 +185,17 @@ def main():
     parser = argparse.ArgumentParser(description="Block check script for GoodbyeDPI or Zapret.")
     parser.add_argument("--tool", type=str, choices=ANTI_DPI_TOOLS_LIST, required=True,
                         help="Choose anti-DPI tool: GoodbyeDPI, Zapret or none.")
+        
+    parser.add_argument('--strategy_set_name', type=str, default='min', help='Name of the strategy set (basic, min or full, default: min)')
+    parser.add_argument('--sites_set_name', type=str, default='min', help='Name of the sites set (min or full, default: min)')
     
     args = parser.parse_args()
     g_tool = args.tool
     
-    sites = read_sites("sites_list.txt")
+    sites = read_sites(set_name = args.sites_set_name)
     
     if not args.tool == "none":
-        strategies = read_strategies(args.tool)
+        strategies = read_strategies(args.tool, args.strategy_set_name)
         total_lines = len(strategies)
 
     setup_logging(args.tool)

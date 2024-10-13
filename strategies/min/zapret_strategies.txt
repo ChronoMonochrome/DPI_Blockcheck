@@ -1,0 +1,227 @@
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-tls=sni
+--dpi-desync=split2 --dpi-desync-split-tls=sniext
+--dpi-desync=split2 --dpi-desync-split-pos=1
+--dpi-desync=split2 --dpi-desync-split-pos=5
+--dpi-desync=split2 --dpi-desync-split-pos=50
+--dpi-desync=disorder2 --dpi-desync-split-pos=1
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-ttl=5 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=badsum
+--dpi-desync=fake --dpi-desync-fooling=badsum --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=badseq
+--dpi-desync=fake --dpi-desync-fooling=datanoack
+--dpi-desync=fake --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=md5sig
+--dpi-desync=split --dpi-desync-ttl=1
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=5
+--dpi-desync=split --dpi-desync-ttl=5 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=10
+--dpi-desync=split --dpi-desync-ttl=10 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=badsum
+--dpi-desync=split --dpi-desync-fooling=badsum --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=badseq
+--dpi-desync=split --dpi-desync-fooling=badseq --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=datanoack
+--dpi-desync=split --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=md5sig
+--dpi-desync=split --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=4 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=4 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split2 --dpi-desync-ttl=4 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=badsum
+--dpi-desync=fake,split2 --dpi-desync-fooling=badseq
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=md5sig
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=3 --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=badsum
+--dpi-desync=fake,split --dpi-desync-fooling=badseq
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=md5sig
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-ttl=5
+--dpi-desync=disorder --dpi-desync-ttl=5 --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-ttl=10
+--dpi-desync=disorder --dpi-desync-ttl=10 --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-fooling=badsum
+--dpi-desync=disorder --dpi-desync-fooling=badsum --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-fooling=badseq
+--dpi-desync=disorder --dpi-desync-fooling=badseq --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-fooling=datanoack
+--dpi-desync=disorder --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-fooling=md5sig
+--dpi-desync=disorder --dpi-desync-fooling=md5sig --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=3 --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=badsum
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=badseq
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=datanoack
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=md5sig
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-ttl=3 --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder --dpi-desync-ttl=3 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-fooling=badsum
+--dpi-desync=fake,disorder --dpi-desync-fooling=badseq
+--dpi-desync=fake,disorder --dpi-desync-fooling=datanoack
+--dpi-desync=fake,disorder --dpi-desync-fooling=datanoack --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,disorder --dpi-desync-fooling=datanoack --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder --dpi-desync-fooling=md5sig
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sniext
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-pos=2
+--dpi-desync=split2 --dpi-desync-split-seqovl=4 --dpi-desync-split-pos=5
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sniext
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-pos=2
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=4 --dpi-desync-split-pos=5
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=1
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=3
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=5
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=1 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=3 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=5 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=3
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=5
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=1
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=3
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=5
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=1 --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=3 --dpi-desync-split-pos=1
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=5 --dpi-desync-split-pos=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=1
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=3
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=5
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=1
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=3
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=5
+--dpi-desync=syndata --dpi-desync-fake-syndata=PAYLOADTLS
+--dpi-desync=syndata,split2 --dpi-desync-split-pos=1
+--dpi-desync=syndata,split2 --dpi-desync-fake-syndata=PAYLOADTLS
+--dpi-desync=syndata,disorder2 --dpi-desync-split-pos=1
+--dpi-desync=syndata,disorder2 --dpi-desync-fake-syndata=PAYLOADTLS
+--dpi-desync=split2 --wssize=1:6
+--dpi-desync=split2 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=disorder2 --wssize=1:6
+--dpi-desync=fake --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-ttl=5 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=fake --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=fake --dpi-desync-fooling=badseq --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=fake --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=fake --dpi-desync-fooling=md5sig --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=split --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=4 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-ttl=5 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=split --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=split --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=split --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=split --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split2 --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split2 --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split2 --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-ttl=1 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-ttl=3 --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS
+--dpi-desync=fake,split --dpi-desync-fooling=datanoack --wssize=1:6 --dpi-desync-fake-tls=PAYLOADTLS --dpi-desync-split-pos=1
+--dpi-desync=fake,split --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=disorder --dpi-desync-ttl=1 --wssize=1:6
+--dpi-desync=disorder --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=disorder --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=disorder --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=disorder --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-fooling=badsum --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-fooling=badseq --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-fooling=datanoack --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-fooling=md5sig --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sniext --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-pos=2 --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-seqovl=2 --dpi-desync-split-pos=3 --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-seqovl=4 --dpi-desync-split-pos=5 --wssize=1:6
+--dpi-desync=split2 --dpi-desync-split-seqovl=336 --dpi-desync-split-seqovl-pattern=PAYLOADTLS --wssize=1:6
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni --wssize=1:6
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sniext --wssize=1:6
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-pos=2 --wssize=1:6
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=2 --dpi-desync-split-pos=3 --wssize=1:6
+--dpi-desync=disorder2 --dpi-desync-split-seqovl=4 --dpi-desync-split-pos=5 --wssize=1:6
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=split --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=fake,split2 --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=fake,split --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=fake,disorder2 --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=1 --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=3 --wssize=1:6
+--dpi-desync=fake,disorder --dpi-desync-ttl=1 --dpi-desync-autottl=5 --wssize=1:6
+--dpi-desync=syndata --wssize=1:6
+--dpi-desync=syndata --dpi-desync-fake-syndata=PAYLOADTLS --wssize=1:6
+--dpi-desync=syndata,split2 --wssize=1:6
+--dpi-desync=syndata,split2 --wssize=1:6 --dpi-desync-split-pos=1
+--dpi-desync=syndata,split2 --dpi-desync-fake-syndata=PAYLOADTLS --wssize=1:6
+--dpi-desync=syndata,disorder2 --wssize=1:6
+--dpi-desync=syndata,disorder2 --dpi-desync-fake-syndata=PAYLOADTLS --wssize=1:6

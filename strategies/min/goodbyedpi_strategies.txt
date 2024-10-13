@@ -1,0 +1,87 @@
+/=======Generic tests=======
+-e 2 -q --native-frag
+-e 2 -q --reverse-frag
+-e 2 -q --native-frag --wrong-seq
+-e 2 -q --reverse-frag --wrong-seq
+-e 2 -q --native-frag --wrong-chksum
+-e 2 -q --reverse-frag --wrong-chksum
+-e 2 -q --native-frag --wrong-seq --wrong-chksum
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum
+/frag sni
+-e 2 -q --frag-by-sni
+-e 2 -q --native-frag --frag-by-sni
+-e 2 -q --reverse-frag --frag-by-sni
+-e 2 -q --native-frag --wrong-seq --frag-by-sni
+-e 2 -q --reverse-frag --wrong-seq --frag-by-sni
+-e 2 -q --native-frag --wrong-chksum --frag-by-sni
+-e 2 -q --reverse-frag --wrong-chksum --frag-by-sni
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --frag-by-sni
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --frag-by-sni
+/
+/
+/=======Same as above but with set ttl 3=======
+-e 2 -q --set-ttl 3
+-e 2 -q --native-frag --set-ttl 3
+-e 2 -q --reverse-frag --set-ttl 3
+-e 2 -q --native-frag --wrong-seq --set-ttl 3
+-e 2 -q --reverse-frag --wrong-seq --set-ttl 3
+-e 2 -q --native-frag --wrong-chksum --set-ttl 3
+-e 2 -q --reverse-frag --wrong-chksum --set-ttl 3
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --set-ttl 3
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --set-ttl 3
+/frag sni
+-e 2 -q --frag-by-sni --set-ttl 3
+-e 2 -q --native-frag --frag-by-sni --set-ttl 3
+-e 2 -q --reverse-frag --frag-by-sni --set-ttl 3
+-e 2 -q --native-frag --wrong-seq --frag-by-sni --set-ttl 3
+-e 2 -q --reverse-frag --wrong-seq --frag-by-sni --set-ttl 3
+-e 2 -q --native-frag --wrong-chksum --frag-by-sni --set-ttl 3
+-e 2 -q --reverse-frag --wrong-chksum --frag-by-sni --set-ttl 3
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 3
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 3
+/
+/
+/=======Same as above but with set ttl 4=======
+-e 2 -q --set-ttl 4
+-e 2 -q --native-frag --set-ttl 4
+-e 2 -q --reverse-frag --set-ttl 4
+-e 2 -q --native-frag --wrong-seq --set-ttl 4
+-e 2 -q --reverse-frag --wrong-seq --set-ttl 4
+-e 2 -q --native-frag --wrong-chksum --set-ttl 4
+-e 2 -q --reverse-frag --wrong-chksum --set-ttl 4
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --set-ttl 4
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --set-ttl 4
+/frag sni
+-e 2 -q --frag-by-sni --set-ttl 4
+-e 2 -q --native-frag --frag-by-sni --set-ttl 4
+-e 2 -q --reverse-frag --frag-by-sni --set-ttl 4
+-e 2 -q --native-frag --wrong-seq --frag-by-sni --set-ttl 4
+-e 2 -q --reverse-frag --wrong-seq --frag-by-sni --set-ttl 4
+-e 2 -q --native-frag --wrong-chksum --frag-by-sni --set-ttl 4
+-e 2 -q --reverse-frag --wrong-chksum --frag-by-sni --set-ttl 4
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 4
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 4
+/
+/
+/=======Same as above but with set ttl 5=======
+-e 2 -q --set-ttl 5
+-e 2 -q --native-frag --set-ttl 5
+-e 2 -q --reverse-frag --set-ttl 5
+-e 2 -q --native-frag --wrong-seq --set-ttl 5
+-e 2 -q --reverse-frag --wrong-seq --set-ttl 5
+-e 2 -q --native-frag --wrong-chksum --set-ttl 5
+-e 2 -q --reverse-frag --wrong-chksum --set-ttl 5
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --set-ttl 5
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --set-ttl 5
+/frag sni
+-e 2 -q --frag-by-sni --set-ttl 5
+-e 2 -q --native-frag --frag-by-sni --set-ttl 5
+-e 2 -q --reverse-frag --frag-by-sni --set-ttl 5
+-e 2 -q --native-frag --wrong-seq --frag-by-sni --set-ttl 5
+-e 2 -q --reverse-frag --wrong-seq --frag-by-sni --set-ttl 5
+-e 2 -q --native-frag --wrong-chksum --frag-by-sni --set-ttl 5
+-e 2 -q --reverse-frag --wrong-chksum --frag-by-sni --set-ttl 5
+-e 2 -q --native-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 5
+-e 2 -q --reverse-frag --wrong-seq --wrong-chksum --frag-by-sni --set-ttl 5
+/
+/

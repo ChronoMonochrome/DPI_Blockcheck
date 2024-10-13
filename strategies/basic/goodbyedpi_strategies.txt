@@ -1,0 +1,7 @@
+/=======Generic tests=======
+-e 1 -q --native-frag --wrong-seq
+-e 1 -q --reverse-frag --wrong-seq
+-e 1 -q --native-frag --wrong-seq --fake-with-sni FAKESNI
+-e 1 -q --reverse-frag --wrong-seq --fake-with-sni FAKESNI
+-e 1 -q --native-frag --wrong-seq --fake-from-hex FAKEHEX --fake-gen 5
+-e 1 -q --reverse-frag --wrong-seq --fake-from-hex FAKEHEX --fake-gen 10
