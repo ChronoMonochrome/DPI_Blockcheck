@@ -13,6 +13,7 @@ import sys
 FAKE_SNI = "www.google.com"
 FAKE_HEX = "5fc220bc088ae1a45235e46de591be50a50c979be92694471697a299ce78c1c276737bef7abc9668142b92c395810a659ff47dfd2411c010e990"
 PAYLOADTLS = "tls_clienthello_www_google_com.bin"
+PAYLOADQUIC = "quic_initial_www_google_com.bin"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6753.0 Safari/537.36"}
 
 ANTI_DPI_TOOLS_LIST = ["goodbyedpi", "zapret", "none"]
@@ -108,6 +109,7 @@ def replace_parameters(parameters):
     parameters = parameters.replace("FAKESNI", FAKE_SNI)
     parameters = parameters.replace("FAKEHEX", FAKE_HEX)
     parameters = parameters.replace("PAYLOADTLS", os.path.join(g_absolute_path, "bin", PAYLOADTLS))
+    parameters = parameters.replace("PAYLOADQUIC", os.path.join(g_absolute_path, "bin", PAYLOADQUIC))
     return f"{parameters}"
 
 def start_tool(tool, parameters):
