@@ -205,7 +205,7 @@ def main():
     parser.add_argument("--tool", type=str, choices=ANTI_DPI_TOOLS_LIST, required=True,
                         help="Choose anti-DPI tool: GoodbyeDPI, Zapret or none.")
         
-    parser.add_argument('--strategy_set_name', type=str, default='min', help='Name of the strategy set (basic, min or full, default: min)')
+    parser.add_argument('--strategies_set_name', type=str, default='min', help='Name of the strategy set (basic, min or full, default: min)')
     parser.add_argument('--sites_set_name', type=str, default='min', help='Name of the sites set (min or full, default: min)')
     
     args = parser.parse_args()
@@ -214,7 +214,7 @@ def main():
     sites = read_sites(set_name = args.sites_set_name)
     
     if not args.tool == "none":
-        strategies = read_strategies(args.tool, args.strategy_set_name)
+        strategies = read_strategies(args.tool, args.strategies_set_name)
         total_lines = len(strategies)
 
     setup_logging(args.tool)
