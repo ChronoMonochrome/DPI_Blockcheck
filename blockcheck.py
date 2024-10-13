@@ -180,8 +180,13 @@ def log_results(params, results, current_line, total_lines):
     summary = f"Successes: {successes}/{len(results)}"
     logging.info(f"Testing ({current_line}/{total_lines}): {params}. {summary}")
 
+    fmt_spaces_num = 8
     for site, status in results.items():
-        log_entry = f"{status}\t\t{site}"
+        if status == "WORKING":
+            fmt_spaces_num = 12
+        else:
+            fmt_spaces_num = 8
+        log_entry = f"{status}{' '*fmt_spaces_num}{site}"
         logging.info(log_entry)
 
 def main():
