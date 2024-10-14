@@ -60,17 +60,15 @@ def find_tool_path(tool_name):
 
     ret = ""
     if os.name == "nt":
-        match tool_name:
-            case "zapret":
-                ret = os.path.join(ZAPRET_NT_PATH, ZAPRET_NT_TOOL_NAME)
-            case "goodbyedpi":
-                ret = os.path.join(GOODBYEDPI_NT_PATH, GOODBYEDPI_NT_TOOL_NAME)
+        if tool_name == "zapret":
+            ret = os.path.join(ZAPRET_NT_PATH, ZAPRET_NT_TOOL_NAME)
+        elif tool_name == "goodbyedpi":
+            ret = os.path.join(GOODBYEDPI_NT_PATH, GOODBYEDPI_NT_TOOL_NAME)
     else:
-        match tool_name:
-            case "zapret":
-                ret = os.path.join(ZAPRET_LINUX_PATH, ZAPRET_LINUX_TOOL_NAME)
-            case "goodbyedpi":
-                raise RuntimeError("GoodbyeDPI only supported on Windows")
+        if tool_name == "zapret":
+            ret = os.path.join(ZAPRET_LINUX_PATH, ZAPRET_LINUX_TOOL_NAME)
+        elif tool_name == "goodbyedpi":
+            raise RuntimeError("GoodbyeDPI only supported on Windows")
     if not os.path.exists(ret):
         raise RuntimeError(f"Couldn't find specified tool at {ret}")
     return ret
@@ -116,17 +114,15 @@ def start_tool(tool, parameters):
     parameters = parameters.split()
 
     if os.name == "nt":
-        match tool:
-            case "goodbyedpi":
-                parameters = GOODBYEDPI_NT_ARGS + parameters
-            case "zapret":
-                parameters = ZAPRET_NT_ARGS + parameters
+        if tool == "goodbyedpi":
+            parameters = GOODBYEDPI_NT_ARGS + parameters
+        elif tool == "zapret":
+            parameters = ZAPRET_NT_ARGS + parameters
     else:
-        match tool:
-            case "goodbyedpi":
-                RuntimeError(f"tool {tool} is not supported on OS {os.name}")
-            case "zapret":
-                pass
+        if tool == "goodbyedpi":
+            RuntimeError(f"tool {tool} is not supported on OS {os.name}")
+        elif tool == "zapret":
+            pass
 
     if (os.name == "posix" and tool == "zapret"):
         global zapret_linux_config_mounted
