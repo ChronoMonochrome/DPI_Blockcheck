@@ -98,17 +98,20 @@ def download_files_with_verification(download_folder):
             with open(filename, 'wb') as f:
                 f.write(response.content)
 
-            # Verify MD5 checksum if it exists
-            if expected_md5 and expected_md5 != md5_checksum(filename):
-                print(f"Checksum mismatch for {filename}: expected {expected_md5}, got {md5_checksum(filename)}")
-            else:
-                print(f"Successfully verified {filename}")
-
-            if filename.endswith(".zip") and "goodbyedpi" in filename:
-                extract_goodbyedpi(filename)
-
         except Exception as e:
             print(f"Error downloading {url}: {e}")
+
+        # Verify MD5 checksum if it exists
+        calculated_md5 = md5_checksum(filename)
+        if expected_md5 and expected_md5 != calculated_md5:
+            os.remove(filename)
+            raise RuntimeError(f"Checksum mismatch for {filename}: expected {expected_md5}, got {calculated_md5}")
+        else:
+            print(f"Successfully verified {filename}")
+
+        if filename.endswith(".zip") and "goodbyedpi" in filename:
+            extract_goodbyedpi(filename)
+
 
 
 def extract_file_from_zip(zip_ref, file_to_extract, target_directory, target_filename):
@@ -152,12 +155,7 @@ def extract_goodbyedpi(zip_name, bin_directory='bin'):
     else:
         print(f"{zip_name} is not a valid ZIP file.")
 
-# Example usage:
-urls_file = 'urls.txt'  # Your input txt file with URLs
-download_folder = 'bin'  # Folder to save binaries
-
-# Download files and create the checksums.json file
-#download_files(urls_file, download_folder)
-
-# Download files again with checksum verification
-download_files_with_verification(download_folder)
+if __name__ == "__main__":
+    g_absolute_path = os.path.dirname(os.path.abspath(__file__))
+    download_folder = os.path.join(g_absolute_path, "bin")
+    download_files_with_verification(download_folder)
