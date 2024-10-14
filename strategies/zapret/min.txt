@@ -1,4 +1,5 @@
 --dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni --wssize=1:6
+--wf-udp=443,50000-65535 --filter-udp=443 --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic=PAYLOADQUIC --new --filter-udp=50000-65535 --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-cutoff=d3 --dpi-desync-repeats=6 --dpi-desync-fake-quic=PAYLOADQUIC --new --filter-tcp=443 --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls=PAYLOADTLS
 --dpi-desync=split2 --dpi-desync-split-tls=sni
 --dpi-desync=split2 --dpi-desync-split-tls=sniext
 --dpi-desync=split2 --dpi-desync-split-pos=1

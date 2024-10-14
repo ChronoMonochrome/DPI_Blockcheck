@@ -98,7 +98,7 @@ def setup_logging(tool):
 
 def read_strategies(tool_name, strategy_set_name = "min"):
     global g_absolute_path
-    strategy_file = os.path.join(g_absolute_path, f"strategies/{strategy_set_name}/{tool_name}_strategies.txt")
+    strategy_file = os.path.join(g_absolute_path, f"strategies/{tool_name}/{strategy_set_name}.txt")
     with open(strategy_file, "r") as file:
         return [line.strip() for line in file if not line.startswith("/")]
 
@@ -151,7 +151,7 @@ def stop_tool(process, tool):
 
 def test_site(site):
     try:
-        response = requests.get(site, headers = HEADERS, timeout=1)
+        response = requests.get(site, headers = HEADERS, timeout=2)
         if len(response.content) == 0:
             return site, "NOT WORKING"
         return site, "WORKING"
@@ -201,7 +201,7 @@ def main():
     parser.add_argument("--tool", type=str, choices=ANTI_DPI_TOOLS_LIST, required=True,
                         help="Choose anti-DPI tool: GoodbyeDPI, Zapret or none.")
         
-    parser.add_argument('--strategies_set_name', type=str, default='min', help='Name of the strategy set (basic, min or full, default: min)')
+    parser.add_argument('--strategies_set_name', type=str, default='simple', help='Name of the strategy set (basic, simple, min, medium or full, default: simple)')
     parser.add_argument('--sites_set_name', type=str, default='min', help='Name of the sites set (min or full, default: min)')
     
     args = parser.parse_args()

@@ -1,0 +1,7 @@
+--dpi-desync=split2 --dpi-desync-repeats=15 
+--dpi-desync=split2  --dpi-desync-split-pos=1 --dpi-desync-repeats=15
+--dpi-desync=disorder2 --dpi-desync-split-pos=1 --dpi-desync-repeats=15
+--dpi-desync=fake --dpi-desync-repeats=15
+--dpi-desync=fake --dpi-desync-fooling=badsum --dpi-desync-repeats=15
+--dpi-desync=fake --dpi-desync-fooling=badseq --dpi-desync-repeats=15
+--dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni --wssize=1:6

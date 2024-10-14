@@ -1,0 +1,17 @@
+ --dpi-desync=disorder --dpi-desync-fooling=badsum
+ --dpi-desync=disorder --dpi-desync-fooling=md5sig
+ --dpi-desync=disorder --dpi-desync-ttl=1
+ --dpi-desync=disorder --dpi-desync-ttl=1 --dpi-desync-autottl=2
+ --dpi-desync=disorder --dpi-desync-ttl=4
+ --dpi-desync=disorder2 --dpi-desync-split-pos=1
+ --dpi-desync=disorder2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni
+ --dpi-desync=fake --dpi-desync-ttl=1 --dpi-desync-autottl=5
+ --dpi-desync=fake --dpi-desync-ttl=4
+ --dpi-desync=fake,disorder --dpi-desync-ttl=1
+ --dpi-desync=fake,disorder --dpi-desync-ttl=12 --dpi-desync-fake-tls=0x00000000
+ --dpi-desync=fake,disorder2 --dpi-desync-fooling=badsum --dpi-desync-fake-tls=0x00000000
+ --dpi-desync=fake,disorder2 --dpi-desync-fooling=md5sig --dpi-desync-fake-tls=0x00000000
+ --dpi-desync=fake,disorder2 --dpi-desync-ttl=3
+ --dpi-desync=fake,disorder2 --dpi-desync-ttl=4 --dpi-desync-fake-tls=0x00000000
+ --dpi-desync=fake,split --dpi-desync-fooling=badseq --dpi-desync-fake-tls=0x00000000
+ --dpi-desync=split2 --dpi-desync-split-seqovl=1 --dpi-desync-split-tls=sni
