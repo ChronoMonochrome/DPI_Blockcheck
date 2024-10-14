@@ -1,13 +1,23 @@
 [
     {
         "file_name": "cygwin1.dll",
-        "url": "file://c:\\cygwin64\\bin\\cygwin1.dll",
-        "md5sum": "478a1dc9a109f1aa63652be455bd6614"
+        "url": "https://github.com/bol-van/zapret-win-bundle/raw/34a788b72268777f07a2cf2019e43729167934de/zapret-winws/cygwin1.dll",
+        "md5sum": "c50b50303fae4afe7248307339a00d13"
     },
     {
         "file_name": "winws.exe",
-        "url": "https://github.com/bol-van/zapret/raw/96edcd1aa462500c2ff7a9937c63fd2a747704b2/binaries/win64/winws.exe",
+        "url": "https://github.com/bol-van/zapret-win-bundle/raw/34a788b72268777f07a2cf2019e43729167934de/zapret-winws/winws.exe",
         "md5sum": "8c624e64742bc19447d52f61edec52db"
+    },
+    {
+        "file_name": "WinDivert.dll",
+        "url": "https://github.com/bol-van/zapret-win-bundle/raw/34a788b72268777f07a2cf2019e43729167934de/zapret-winws/WinDivert.dll",
+        "md5sum": "b2014d33ee645112d5dc16fe9d9fcbff"
+    },
+    {
+        "file_name": "WinDivert64.sys",
+        "url": "https://github.com/bol-van/zapret-win-bundle/raw/34a788b72268777f07a2cf2019e43729167934de/zapret-winws/WinDivert64.sys",
+        "md5sum": "89ed5be7ea83c01d0de33d3519944aa5"
     },
     {
         "file_name": "goodbyedpi-0.2.3rc3-2.zip",

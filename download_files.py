@@ -138,8 +138,6 @@ def extract_goodbyedpi(zip_name, bin_directory='bin'):
                 base_filename = os.path.splitext(os.path.basename(zip_name))[0]
                 files_to_extract = {
                     f"{base_filename}/x86_64/goodbyedpi.exe": "goodbyedpi.exe",
-                    f"{base_filename}/x86_64/WinDivert.dll": "WinDivert.dll",
-                    f"{base_filename}/x86_64/WinDivert64.sys": "WinDivert64.sys"
                 }
 
                 # Extract each file
