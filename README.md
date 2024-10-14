@@ -24,9 +24,10 @@ This script is inspired by another project found at [NTC Party](https://ntc.part
    ```bash
    git clone https://github.com/ChronoMonochrome/DPI_Blockcheck
    cd DPI_Blockcheck
-2. If cloning this repo first time, run `python download_files.py`. The required files will be downloaded to bin folder. For zapret to work on Windows, it's required that the cygwin is installed to C:/cygwin64 (or a file C:/cygwin64/bin/cygwin1.dll is present)
+2. If cloning this repo first time, run `python download_files.py`. The required files will be downloaded to bin folder.
 3. Run blockcheck.py (e.g. from cmd.exe) with admin privileges:
    `python blockcheck.py --tool=zapret`
 or
    `python blockcheck.py --tool=goodbyedpi`
 4. To test your current configuration without stopping the system service, enable GoodbyeDPI/zapret service and use --tool=none
+5. Run `python parse_log.py -i log_file.txt -o dist` to generate configs for the given sites set in the log file (only zapret / win64 is supported)
