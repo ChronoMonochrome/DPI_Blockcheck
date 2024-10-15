@@ -153,7 +153,7 @@ def stop_tool(process, tool):
 
 def test_site(site):
     try:
-        response = requests.get(site, headers = HEADERS, timeout=2)
+        response = requests.get(site, headers = HEADERS, timeout=1)
         if len(response.content) == 0:
             return site, "NOT WORKING"
         return site, "WORKING"
