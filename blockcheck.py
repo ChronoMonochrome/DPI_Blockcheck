@@ -130,7 +130,8 @@ def start_tool(tool, parameters):
             write_zapret_linux_config(parameters)
             mount_zapret_linux_config()
             zapret_linux_config_mounted = True
-        subprocess.run("service zapret restart", shell=True)
+        subprocess.run(["/opt/zapret/init.d/sysv/zapret", "stop"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+        subprocess.run(["/opt/zapret/init.d/sysv/zapret", "start"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
         return
     else:
         tool_path = find_tool_path(tool)
@@ -147,7 +148,8 @@ def stop_tool(process, tool):
             remove_zapret_linux_config()
             umount_zapret_linux_config()
             zapret_linux_config_mounted = False
-        subprocess.run("service zapret restart", shell=True)
+        subprocess.run(["/opt/zapret/init.d/sysv/zapret", "stop"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
+        subprocess.run(["/opt/zapret/init.d/sysv/zapret", "start"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
 def test_site(site):
     try:
