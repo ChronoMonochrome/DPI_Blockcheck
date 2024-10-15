@@ -83,9 +83,13 @@ def create_output_files(used_configs, output_folder):
         
         for i, (config, sites) in enumerate(used_configs.items()):
             sanitized_config_name = sanitize_config_name(config)
-            f.write(f'--filter-tcp=443 --hostlist="%STRAT%{sanitized_config_name}.txt" {config}')
-            if i != len(used_configs) - 1:
-                f.write(f' --new ^\n')
+            f.write(f'--filter-tcp=443 --hostlist="%STRAT%{sanitized_config_name}.txt" {config} --new ^\n')
+        f.write('--filter-udp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+        f.write('--filter-udp=50000-50099 --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-cutoff=d3 --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+        f.write('--filter-tcp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^\n')
+        f.write('--filter-udp=443 --hostlist="%~dp0list-general.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+        f.write('--filter-tcp=80 --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^\n')
+        f.write('--filter-tcp=443 --hostlist-auto="%STRAT%hostlist-auto.txt" --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin"\n')
 
 def sanitize_config_name(config_name):
     # Replace spaces and equal signs with underscores
@@ -116,6 +120,9 @@ def main():
         shutil.copytree(bin_folder, os.path.join(output_dir, 'bin'), dirs_exist_ok=True)
     else:
         print(f"Warning: 'bin' folder does not exist in the script directory: {bin_folder}")
+
+    shutil.copy(os.path.join(script_dir, "sites_list", "list-discord.txt"), output_dir)
+    shutil.copy(os.path.join(script_dir, "sites_list", "list-general.txt"), output_dir)
 
     # Parse the log file
     configs = parse_log_file(log_file_path)
