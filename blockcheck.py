@@ -1,6 +1,7 @@
 import signal
 import subprocess
-import requests
+import aiohttp
+import asyncio
 import time
 import logging
 import argparse
@@ -151,23 +152,28 @@ def stop_tool(process, tool):
         subprocess.run(["/opt/zapret/init.d/sysv/zapret", "stop"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
         subprocess.run(["/opt/zapret/init.d/sysv/zapret", "start"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-def test_site(site):
-    try:
-        response = requests.get(site, headers = HEADERS, timeout=1)
-        if len(response.content) == 0:
-            return site, "NOT WORKING"
-        return site, "WORKING"
-    except requests.RequestException:
-        return site, "NOT WORKING"
+async def test_site(session, site, semaphore):
+    async with semaphore:
+        try:
+            async with session.get(site, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=1)) as response:
+                return site, "WORKING"
+        except asyncio.CancelledError:
+            return site, "CANCELLED"
+        except Exception as e:
+            return site, f"NOT WORKING"
 
-def test_sites(sites):
+async def test_sites(sites):
     results = {}
-    
-    with ThreadPoolExecutor() as executor:
-        future_to_site = {executor.submit(test_site, site): site for site in sites}
-        for future in as_completed(future_to_site):
-            site, status = future.result()
-            results[site] = status
+    async with aiohttp.ClientSession() as session:
+        semaphore = asyncio.Semaphore(10)  # Limit to 10 concurrent requests
+        tasks = [test_site(session, site, semaphore) for site in sites]
+        completed_results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        for result in completed_results:
+            if isinstance(result, Exception):
+                results[result.args[0]] = "ERROR: " + str(result)
+            else:
+                results[result[0]] = result[1]
 
     return results
 
@@ -222,14 +228,14 @@ def main():
             parameters = replace_parameters(original_params)
             process = start_tool(args.tool, parameters)
 
-            time.sleep(2)
+            time.sleep(1.5)
 
-            results = test_sites(sites)
+            results = asyncio.run(test_sites(sites))
             log_results(parameters, results, current_line, total_lines)
 
             stop_tool(process, args.tool)
     else:
-        results = test_sites(sites)
+        results = asyncio.run(test_sites(sites))
         log_results("", results, "", 0)
 
 if __name__ == "__main__":
