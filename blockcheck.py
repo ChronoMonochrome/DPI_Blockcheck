@@ -155,7 +155,7 @@ def stop_tool(process, tool):
 async def test_site(session, site, semaphore):
     async with semaphore:
         try:
-            async with session.get(site, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=1)) as response:
+            async with session.get(site, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=2)) as response:
                 return site, "WORKING"
         except asyncio.CancelledError:
             return site, "CANCELLED"
