@@ -2,6 +2,8 @@ import argparse
 import os
 import shutil
 
+g_absolute_path = ""
+
 def parse_log_file(file_path):
     configs = {}
     with open(file_path, 'r') as file:
@@ -73,30 +75,46 @@ def create_output_files(used_configs, output_folder):
             for site in sites:
                 f.write(f"{site.replace('https://', '').replace('http://', '')}\n")
 
-    # Create start.cmd file
-    cmd_file_path = os.path.join(output_folder, "start.cmd")
-    with open(cmd_file_path, 'w') as f:
-        f.write("set BIN=%~dp0bin\\\n")
-        f.write("set STRAT=%~dp0strategies\\\n\n")
-        f.write('start "Zapret: multi" /min "%BIN%winws.exe" ^\n')
-        f.write('--wf-tcp=80,443 --wf-udp=443,50000-50099 ^\n')
-        
+    if os.name == "nt":
+        # Create start.cmd file
+        cmd_file_path = os.path.join(output_folder, "start.cmd")
+        with open(cmd_file_path, 'w') as f:
+            f.write("set BIN=%~dp0bin\\\n")
+            f.write("set STRAT=%~dp0strategies\\\n\n")
+            f.write('start "Zapret: multi" /min "%BIN%winws.exe" ^\n')
+            f.write('--wf-tcp=80,443 --wf-udp=443,50000-50099 ^\n')
+            
+            for i, (config, sites) in enumerate(used_configs.items()):
+                sanitized_config_name = sanitize_config_name(config)
+                f.write(f'--filter-tcp=443 --hostlist="%STRAT%{sanitized_config_name}.txt" {config} --new ^\n')
+            f.write('--filter-udp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+            f.write('--filter-udp=50000-50099 --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-cutoff=d3 --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+            f.write('--filter-tcp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^\n')
+            f.write('--filter-udp=443 --hostlist="%~dp0list-general.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
+            f.write('--filter-tcp=80 --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^\n')
+            f.write('--filter-tcp=443 --hostlist-auto="%STRAT%hostlist-auto.txt" --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin"\n')
+    else:
+        desync_https_args = ""
         for i, (config, sites) in enumerate(used_configs.items()):
             sanitized_config_name = sanitize_config_name(config)
-            f.write(f'--filter-tcp=443 --hostlist="%STRAT%{sanitized_config_name}.txt" {config} --new ^\n')
-        f.write('--filter-udp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
-        f.write('--filter-udp=50000-50099 --dpi-desync=fake --dpi-desync-any-protocol --dpi-desync-cutoff=d3 --dpi-desync-repeats=6 --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
-        f.write('--filter-tcp=443 --hostlist="%~dp0list-discord.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin" --new ^\n')
-        f.write('--filter-udp=443 --hostlist="%~dp0list-general.txt" --dpi-desync=fake --dpi-desync-repeats=6 --dpi-desync-udplen-increment=10 --dpi-desync-udplen-pattern=0xDEADBEEF --dpi-desync-fake-quic="%BIN%quic_initial_www_google_com.bin" --new ^\n')
-        f.write('--filter-tcp=80 --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split2 --dpi-desync-autottl=2 --dpi-desync-fooling=md5sig --new ^\n')
-        f.write('--filter-tcp=443 --hostlist-auto="%STRAT%hostlist-auto.txt" --hostlist="%~dp0list-general.txt" --dpi-desync=fake,split --dpi-desync-autottl=2 --dpi-desync-repeats=6 --dpi-desync-fooling=badseq --dpi-desync-fake-tls="%BIN%tls_clienthello_www_google_com.bin"\n')
+            strat_path = os.path.join(os.path.realpath(output_folder), "strategies", sanitized_config_name)
+            if i != len(used_configs) - 1:
+                desync_https_args += f"{config} --hostlist={strat_path}.txt --new "
+            else:
+                desync_https_args += f"{config} --hostlist={strat_path}.txt"
+
+        linux_config_path = os.path.join(g_absolute_path, "configs/zapret_linux_config")
+        new_config = open(linux_config_path, "rb").read().decode("u8").replace('NFQWS_OPT_DESYNC_HTTPS="ARGS"', f'NFQWS_OPT_DESYNC_HTTPS="{desync_https_args}"')
+        open(os.path.join(os.path.realpath(output_folder), "config"), "wb").write(new_config.encode("u8"))
+        
 
 def sanitize_config_name(config_name):
     # Replace spaces and equal signs with underscores
-    sanitized = config_name.replace(" ", "_").replace("=", "_").replace("-", "")
+    sanitized = config_name.replace(" ", "_").replace("=", "_").replace("/", "_").replace("-", "")
     return sanitized
 
 def main():
+    global g_absolute_path
     # Set up the argument parser
     parser = argparse.ArgumentParser(description="Process log files for site coverage.")
     parser.add_argument('-i', '--input-log-file', required=True, help="Path to the input log file.")
@@ -110,6 +128,7 @@ def main():
 
     # Determine the script's directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
+    g_absolute_path = script_dir
     bin_folder = os.path.join(script_dir, 'bin')
 
     # Ensure the output directory exists
