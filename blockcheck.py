@@ -152,21 +152,21 @@ def stop_tool(process, tool):
         subprocess.run(["/opt/zapret/init.d/sysv/zapret", "stop"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
         subprocess.run(["/opt/zapret/init.d/sysv/zapret", "start"], stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL)
 
-async def test_site(session, site, semaphore):
+async def test_site(session, site, semaphore, timeout):
     async with semaphore:
         try:
-            async with session.get(site, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=2)) as response:
+            async with session.get(site, headers=HEADERS, timeout=aiohttp.ClientTimeout(total=timeout)) as response:
                 return site, "WORKING"
         except asyncio.CancelledError:
             return site, "CANCELLED"
         except Exception as e:
             return site, f"NOT WORKING"
 
-async def test_sites(sites):
+async def test_sites(sites, timeout=2):
     results = {}
     async with aiohttp.ClientSession() as session:
         semaphore = asyncio.Semaphore(10)  # Limit to 10 concurrent requests
-        tasks = [test_site(session, site, semaphore) for site in sites]
+        tasks = [test_site(session, site, semaphore, timeout) for site in sites]
         completed_results = await asyncio.gather(*tasks, return_exceptions=True)
         
         for result in completed_results:
@@ -211,9 +211,11 @@ def main():
         
     parser.add_argument('--strategies_set_name', type=str, default='simple', help='Name of the strategy set (basic, simple, min, medium or full, default: simple)')
     parser.add_argument('--sites_set_name', type=str, default='min', help='Name of the sites set (min or full, default: min)')
+    parser.add_argument('--timeout', type=int, default=2, help='Timeout to load site (default: 2 sec)')
     
     args = parser.parse_args()
     g_tool = args.tool
+    timeout = args.timeout
     
     sites = read_sites(set_name = args.sites_set_name)
     
@@ -230,12 +232,12 @@ def main():
 
             time.sleep(1.5)
 
-            results = asyncio.run(test_sites(sites))
+            results = asyncio.run(test_sites(sites, timeout=timeout))
             log_results(parameters, results, current_line, total_lines)
 
             stop_tool(process, args.tool)
     else:
-        results = asyncio.run(test_sites(sites))
+        results = asyncio.run(test_sites(sites, timeout=timeout))
         log_results("", results, "", 0)
 
 if __name__ == "__main__":
